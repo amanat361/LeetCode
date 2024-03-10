@@ -3,8 +3,7 @@ function intersection(nums1: number[], nums2: number[]): number[] {
   for (let i = 0; i < nums1.length; i++) {
     seen.set(nums1[i], false);
   }
-  const bar = Array.from(new Set(nums2));
-  for (let i = 0; i < bar.length; i++) {
+  const bar = Array.from(new Set(nums2));  for (let i = 0; i < bar.length; i++) {
     if (seen.has(bar[i])) {
       seen.set(bar[i], true);
     }
