@@ -1,5 +1,5 @@
-// https://leetcode.com/problems/median-of-two-sorted-arrays/
+// https://leetcode.com/problems/valid-parentheses/
 
-function findMedianSortedArrays(nums1: number[], nums2: number[]): number {
-  return 0;  
-};
+function isValid(s: string): boolean {
+  return false;
+}
