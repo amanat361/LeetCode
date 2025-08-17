@@ -87,10 +87,12 @@ function digitsAllowed(n: number): boolean {
   return true;
 }
 
-function countCircularPrimes(limit: number): number {
+function findCircularPrimes(limit: number): { count: number, primes: number[], groups: number[][] } {
   // We iterate all primes and check their rotations exactly once using a visited array.
-  // If all rotations are prime, we add the number of distinct rotations to the count.
+  // If all rotations are prime, we add the number of distinct rotations to the count
+  // and collect the rotation set in groups.
   const visited = new Uint8Array(limit + 1);
+  const groups: number[][] = [];
   let count = 0;
   for (const p of sieve.primes) {
     if (p >= limit) break;
@@ -107,11 +109,16 @@ function countCircularPrimes(limit: number): number {
     for (const r of rotations) {
       if (r <= limit) visited[r] = 1;
     }
-    if (allPrime) count += rotations.length;
+    if (allPrime) {
+      groups.push(rotations.filter(r => r < limit));
+      count += rotations.length;
+    }
   }
-  return count;
+  const primes = groups.flat().sort((a, b) => a - b);
+  return { count, primes, groups };
 }
 
 // The answer to Project Euler 35: number of circular primes below one million
-const answer = countCircularPrimes(LIMIT);
-console.log(answer);
+const { count, primes, groups } = findCircularPrimes(LIMIT);
+console.log(`Circular primes below ${LIMIT}: ${count}`);
+console.log(`Values: ${primes.join(', ')}`);
